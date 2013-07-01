@@ -1,0 +1,19 @@
+Index: config/config.php
+===================================================================
+--- config/config.php	(original)
++++ config/config.php	(patched)
+@@ -23,9 +23,10 @@
+ 	 * reverse proxy).
+ 	 */
+ 	'baseurlpath'           => 'simplesaml/',
+-	'certdir'               => 'cert/',
+-	'loggingdir'            => 'log/',
+-	'datadir'               => 'data/',
++	'certdir'               => '/etc/pki/simplesamlphp/',
++	'loggingdir'            => '/var/log/simplesamlphp/',
++	'datadir'               => '/var/lib/simplesamlphp/data/',
++	'metadatadir'           => '/var/lib/simplesamlphp/metadata/',
+ 
+ 	/*
+ 	 * A directory where simpleSAMLphp can save temporary files.
+
