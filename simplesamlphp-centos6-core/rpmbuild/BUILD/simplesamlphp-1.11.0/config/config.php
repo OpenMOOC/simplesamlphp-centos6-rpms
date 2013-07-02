@@ -26,7 +26,7 @@ $config = array (
 	'certdir'               => '/etc/pki/simplesamlphp/',
 	'loggingdir'            => '/var/log/simplesamlphp/',
 	'datadir'               => '/var/lib/simplesamlphp/data/',
-	'metadatadir'           => '/var/lib/simplesamlphp/metadata/',
+	'metadatadir'           => '/var/lib/simplesamlphp/metadata/',    
 
 	/*
 	 * A directory where simpleSAMLphp can save temporary files.
@@ -680,3 +680,7 @@ $config = array (
 	'redirect.trustedsites' => NULL,
 
 );
+
+if (file_exists('extended_config.php')) {
+	include_once('extended_config.php');
+}
