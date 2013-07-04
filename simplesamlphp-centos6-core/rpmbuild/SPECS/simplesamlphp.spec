@@ -93,13 +93,9 @@ But also supports some other identity protocols, such as Shibboleth
 %build
 
 %install
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/config
 cp config/config.php ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/config/config.php
 cp config/authsources.php ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/config/authsources.php
-
-rm -rf ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/metadata
-rm -rf ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/cert
 
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/pki
 cp -pr cert ${RPM_BUILD_ROOT}%{_sysconfdir}/pki/%{name}
