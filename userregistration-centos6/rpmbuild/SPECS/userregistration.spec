@@ -39,6 +39,9 @@ This module is an element of the OpenMOOC project.
 %prep
 %setup -q -b 0 -n userregistration-0.1.0
 
+%post
+echo "The userregistration module was sucessfully installed and was enabled, please config the %{_sysconfdir}/%{ssp}/config/module_userregistration.php file"
+
 %build
 
 %install
@@ -48,6 +51,7 @@ cp config-templates/module_userregistration.php ${RPM_BUILD_ROOT}%{_sysconfdir}/
 
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{module_name}
 cp -pr * ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{module_name}
+touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{module_name}/enable
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
