@@ -19,6 +19,12 @@ Requires: openldap-servers
 Requires: phpldapadmin
 Requires: php-ldap
 Requires: simplesamlphp
+Requires: postfix
+# userregistration uses redis or mongodb as store backend
+Requires: redis
+Requires: php-redis
+Requires: mongodb
+Requires: php-pecl-mongo
 %endif 
 
 BuildArch: noarch

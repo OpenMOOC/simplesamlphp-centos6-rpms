@@ -56,6 +56,7 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires: php-fpm >= 5.2.10
 Requires: php-xml
 Requires: php-pdo
+Requires: openssl
 Requires(pre): /usr/sbin/useradd, /usr/bin/getent
 Requires(postun): /usr/sbin/userdel
 %endif 
