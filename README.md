@@ -1,4 +1,4 @@
 simplesamlphp-centos6-rpms
 ==========================
 
-simplesamlphp repository. Some rpms for Centos6 OS to build a OpenMOOC IdP.
+This repository contains the SPECs and sources needed to build the OpenMOOC IdP rpms for CentOS 6.
