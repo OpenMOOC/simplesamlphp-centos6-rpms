@@ -120,7 +120,7 @@ rm -rf ${RPM_BUILD_ROOT}%{_libdir}/%{name}/COPYING
 
 install -m 0770 -d -p ${RPM_BUILD_ROOT}%{_datadir}/log/%{name}
 
-ln -sf %{_sysconfdir}/%{name} ${RPM_BUILD_ROOT}%{_libdir}/%{name}/config
+ln -sf %{_sysconfdir}/%{name}/config ${RPM_BUILD_ROOT}%{_libdir}/%{name}/config
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -134,17 +134,18 @@ fi
 if [ -z "$(/usr/bin/getent passwd %{name})" ]; then
     /usr/sbin/useradd -r -N -s /bin/false %{name}
     /usr/bin/gpasswd -a %{name} %{name}
+	/usr/bin/gpasswd -a apache %{name}
 fi
 
 
 %postun
+/usr/bin/gpasswd -d apache %{name}
 if [ -n "$(/usr/bin/getent passwd %{name})" ]; then
     /usr/sbin/userdel %{name}
 fi
 
-
 %files
-%defattr(644,root,root,755)
+%defattr(644,root,%{name},755)
 
 %dir %attr(775,%{name},%{name}) %{_datadir}/log/%{name}
 
@@ -154,7 +155,7 @@ fi
 %dir %{_sysconfdir}/%{name}
 %attr(640,root,%{name}) %config(noreplace) %{_sysconfdir}/%{name}/*
 
-%dir %attr(640,root,%{name}) %{_libdir}/%{name}
+%dir %attr(750,root,%{name}) %{_libdir}/%{name}
 
 %{_libdir}/%{name}/attributemap
 %{_libdir}/%{name}/bin
