@@ -41,8 +41,9 @@ openmooc theme.
 
 %install
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{theme_module}
-cp -pr * ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{theme_module}
-
+ls -la
+cp -pr %theme_source/* ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{theme_module}
+ls -la ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/%{theme_module}
 
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/metarefresh
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/cron/
