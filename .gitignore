@@ -6,3 +6,7 @@ userregistration-centos6/rpmbuild/BUILD
 userregistration-centos6/rpmbuild/BUILDROOT
 userregistration-centos6/rpmbuild/RPMS
 userregistration-centos6/rpmbuild/SRPMS
+openmooc-idp-centos6-httpd/rpmbuild/BUILD
+openmooc-idp-centos6-httpd/rpmbuild/BUILDROOT
+openmooc-idp-centos6-httpd/rpmbuild/RPMS
+openmooc-idp-centos6-httpd/rpmbuild/SRPMS
