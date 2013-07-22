@@ -2,7 +2,7 @@
 %global module_name userregistrationApi
 %global module_source userregistrationApi-userregistration-apiv0.1.0
 
-Name: userregistration-api
+Name: simplesamlphp-userregistration-api
 Version: 0.1.0
 Release: 1%{?dist}
 Summary: An extension for the userregistration module that implements an API
@@ -14,7 +14,7 @@ Source0: https://github.com/OpenMOOC/userregistrationApi/archive/userregistratio
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 %if 0%{?el6}
-Requires: userregistration
+Requires: simplesamlphp-userregistration
 %endif 
 
 BuildArch: noarch

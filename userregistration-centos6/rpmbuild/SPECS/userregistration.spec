@@ -1,7 +1,7 @@
 %global ssp simplesamlphp
 %global module_name userregistration
 
-Name: userregistration
+Name: simplesamlphp-userregistration
 Version: 0.1.0
 Release: 1%{?dist}
 Summary: Module of simpleSAMLphp that allow manage users of a ldap authsource 
@@ -20,11 +20,12 @@ Requires: phpldapadmin
 Requires: php-ldap
 Requires: simplesamlphp
 Requires: postfix
-# userregistration uses redis or mongodb as store backend
-Requires: redis
-Requires: php-redis
-Requires: mongodb
-Requires: php-pecl-mongo
+# userregistration uses redis, mongodb or Cache_Lite as store backend
+#Requires: redis
+#Requires: php-redis
+#Requires: mongodb
+#Requires: php-pecl-mongo
+#Requires: Cache_Lite
 %endif 
 
 BuildArch: noarch

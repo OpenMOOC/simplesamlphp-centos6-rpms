@@ -21,7 +21,7 @@ Index: config/config.php
  
  );
 +
-+if (file_exists('extended_config.php')) {
-+	include_once('extended_config.php');
++if (file_exists('/etc/simplesamlphp/config/extended_config.php')) {
++	include_once('/etc/simplesamlphp/config/extended_config.php');
 +}
 

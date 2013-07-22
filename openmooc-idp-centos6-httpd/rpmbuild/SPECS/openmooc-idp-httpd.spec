@@ -22,8 +22,12 @@ Requires: php-mcrypt
 Requires: php-mbstring
 Requires: zlib
 Requires: wget
-Requires: userregistration
 Requires: ntp
+Requires: simplesamlphp-userregistration
+# simplesamlphp-userregistration dependences for OpenMOOC
+Requires: mongodb
+Requires: php-pecl-mongo
+
 %endif 
 
 BuildArch: noarch
@@ -50,7 +54,6 @@ mkdir -p ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/cron/
 touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/metarefresh/enable
 touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/cron/enable
 
-mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/askbot
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/moocng
 cp saml20-idp-hosted.php ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
 
@@ -77,7 +80,6 @@ rm -rf ${RPM_BUILD_ROOT}
 %attr(640,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/%{ssp}/config/module_cron.php
 %attr(640,root,simplesamlphp) %config(noreplace) %{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
 
-%attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/askbot
 %attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
 
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/httpd/conf.d/idp.conf
