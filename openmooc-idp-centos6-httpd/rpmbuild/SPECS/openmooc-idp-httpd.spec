@@ -24,6 +24,7 @@ Source6: openmooc_components.php
 Source7: saml20-idp-hosted.php
 # Apache settings
 Source8: idp.conf
+Source9: htpasswd
 
 
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -93,6 +94,8 @@ cp %schema_source/schac.schema ${RPM_BUILD_ROOT}%{ldap_scheme_path}/schac.schema
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 install -m644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 
+cp %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/htpasswd
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
@@ -111,6 +114,7 @@ rm -rf ${RPM_BUILD_ROOT}
 %attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
 
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/httpd/conf.d/idp.conf
+%attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/httpd/htpasswd
 
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/cron/enable
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/metarefresh/enable
