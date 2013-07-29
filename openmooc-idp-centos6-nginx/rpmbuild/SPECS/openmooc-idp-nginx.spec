@@ -103,7 +103,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d/
 cp %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d/idp-fpm.conf
 
 # nginx's session
-mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}/data/session
+mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/data/session
 
 
 %clean
@@ -149,7 +149,7 @@ ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 # php-fpm
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/php-fpm.d/idp-fpm.conf
 
-%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{name}/data/session
+%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/data/session
 
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/cron/enable
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/metarefresh/enable
