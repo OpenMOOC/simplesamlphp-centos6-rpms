@@ -96,6 +96,10 @@ install -m644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 
 cp %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/htpasswd
 
+%post
+rm -f %{_sysconfdir}/httpd/conf.d/phpldapadmin.conf
+
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
