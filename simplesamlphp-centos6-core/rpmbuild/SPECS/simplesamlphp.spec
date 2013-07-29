@@ -101,7 +101,7 @@ cp config/authsources.php ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/config/authsou
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/pki
 cp -pr cert ${RPM_BUILD_ROOT}%{_sysconfdir}/pki/%{name}
 
-install -m 0755 -d -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}
+install -m 0770 -d -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}/data
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{name}/metadata
 
@@ -222,7 +222,9 @@ fi
 %{_libdir}/%{name}/modules/authX509
 
 %{_defaultdocdir}/%{name}
-%{_localstatedir}/lib/%{name}
+%dir %attr(770,root,%{name}) %{_localstatedir}/lib/%{name}
+%attr(770,root,%{name}) %{_localstatedir}/lib/%{name}/data
+%attr(770,root,%{name}) %{_localstatedir}/lib/%{name}/metadata
 
 %doc docs/ COPYING
 

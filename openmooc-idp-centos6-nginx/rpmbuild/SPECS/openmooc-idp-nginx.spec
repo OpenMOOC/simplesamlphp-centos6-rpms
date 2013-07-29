@@ -117,12 +117,15 @@ rm -rf ${RPM_BUILD_ROOT}
 %post
 sed "s/@SERVER_NAME@/${HOSTNAME:-localhost}/g" -i %{_sysconfdir}/nginx/conf.d/idp.conf
 
+# Ignore default php-fpm configuration file
+mv %{_sysconfdir}/php-fpm.d/www.conf %{_sysconfdir}/php-fpm.d/www.conf.default
+
 # phpldapadmin, override the apache perm
 chown -R :%{ssp} %{_sysconfdir}/phpldapadmin
 chown -R :%{ssp} %{_datadir}/phpldapadmin
 
 # link phpldapadmin in simplesamlphp folder
-ln -s %{_sysconfdir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
+ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 
 
 %files
@@ -146,7 +149,7 @@ ln -s %{_sysconfdir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 # php-fpm
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/php-fpm.d/idp-fpm.conf
 
-%attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{name}/data/session
+%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{name}/data/session
 
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/cron/enable
 %attr(640,root,simplesamlphp) %{_libdir}/%{ssp}/modules/metarefresh/enable
