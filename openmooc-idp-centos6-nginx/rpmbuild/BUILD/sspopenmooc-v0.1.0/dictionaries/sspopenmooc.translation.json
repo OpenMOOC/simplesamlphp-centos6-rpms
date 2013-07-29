@@ -1,0 +1,44 @@
+{
+	"welcome": {
+		"es": "Bienvenido"
+	},
+	"log_in": {
+		"es": "Entrar"
+	},
+	"log_out": {
+		"es": "Terminar sesión"
+	},
+	"profile": {
+		"es": "Preferencias del perfil"
+	},
+	"register": {
+		"es": "Registrar"
+	},
+	"newuser": {
+		"es": "Crear nueva cuenta"
+	},
+	"courses": {
+		"es": "Mis clases"
+	},
+	"legal": {
+		"es": "Condiciones legales"
+	},
+	"changepassword": {
+		"es": "Cambiar clave"
+	},	
+	"forgotpassword": {
+		"es": "¿Olvidaste tu clave?"
+	},
+	"changemail": {
+		"es": "Cambiar correo electrónico"
+	},
+	"tos": {
+		"es": "Términos de uso"
+	},
+	"manageusers": {
+		"es": "Gestión de usuarios"
+	},
+	"copyright": {
+		"es": "OpenMOOC Copyright 2013"
+	}
+}

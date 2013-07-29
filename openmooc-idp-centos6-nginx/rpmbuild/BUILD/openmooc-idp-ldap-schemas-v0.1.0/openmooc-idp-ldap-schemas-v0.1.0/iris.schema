@@ -1,0 +1,570 @@
+#----------------------------------------------------------------------
+#
+# iris ldap schema                             version: 20060330-1.1.16
+#
+# Generic objects for the IRIS community
+#
+# RedIRIS 2003-2006
+#
+# see http://www.rediris.es/ldap/schema/iris.schema
+# for the last version
+#----------------------------------------------------------------------
+#
+# Changelog
+#
+# 20060330 - Added dependences and OID branch comments
+# 20050711 - Added irisClassifCode
+# 20050323 - Added irisUserPresenceID
+#          - Added ipHostNumber to irisInetEntity and irisInetEntityStr
+# 20050202 - Added irisUserStatus
+#          - Added 'SUBSTR caseIgnoreIA5SubstringsMatch' to irisMailRoutingAddress
+#          - Deleted irisMailRecipient. Use irisInetEntity instead
+# 20050119 - Minor changes. Added irisMailBox and irisUserPrivateAttributes
+#            strings
+# 20050111 - Syntax error correction. Added '$' to all objects behind irisMailbox
+# 20050110 - Added irisMailMainAddress and irisMailAlternateAddress
+# 20041001 - Added SINGLE-VALUE to irisPersonalUniqueID attribute
+#          - Changed irisUserPrivateAttribute description
+# 20041001 - Added attribute irisUserPrivateAttribute
+#          - Deleted irisUserPublicAttribute
+# 20040929 - Added attribute irisUserPublicAttribute
+# 20040916 - Added attributes irisMailHost, irisMailRoutingAddress, 
+#            irisMailboxand and object class irisMailRecipient used 
+#            by mail services (Thanks uma.es)
+#          - Added irisUserEntitlement
+#          - Deleted irisUserAttrAccess
+# 20040906 - Added irisUserAttrAccess to specifies both question and
+#            answer for the access to a particular attribute of the entry
+# 20040625 - Added irisPersonalUniqueID to store DNI, passport, ...
+# 20040614 - Rename personalTitle to irisPersonalTitle to avoid
+#            conflict with deprecated personalTitle
+# 20040609 - Added attribute personalTitle to irisPerson
+#            The Personal Title attribute type specifies a personal title 
+#            for a person. Examples of personal titles are "Ms", "Dr", 
+#            "Prof" and "Rev" (rfc-1274)
+# 20040413 - Added digitalCertificate and irisInetEntityStr
+#          - Modified irisInetEntity
+#
+#----------------------------------------------------------------------
+# Depends upon
+#
+# attrs: description, mail (core.schema)
+# RFC-2256 A Summary of the X.500(96) User Schema for use with LDAPv3
+#
+# attrs: commonName  (cosine.schema)
+# RFC-1274 The COSINE and Internet X.500 Schema
+#
+# attrs: ipHostNumber (nis.schema)
+# RFC-2307 An Approach for Using LDAP as a Network Information Service
+# 
+#----------------------------------------------------------------------
+# OID branch
+#
+# 1.3.6.1.4.1.7547 toplevel OID for RedIRIS
+#                  .4 = objects related to directories
+#                  .4.3 = iris schema
+#                  .4.3.1 = objectclasses
+#                  .4.3.2 = attributes
+#                  .4.3.3 = syntax (probably never used)
+#
+#----------------------------------------------------------------------
+
+#
+# idnc, irisDnComp
+#
+# Descrip: Atributo que usamos cuando queremos desacoplar el DN de una 
+#          entrada de su contenido, es decir, cuando el atributo no
+#          tienen un significado espec�fico.
+# English: This attribute should be used to decouple the DN of an object
+#          from its (actual) attribute values. 
+# Ejemplo: idnc=a23b12,dc=rediris,dc=es
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.1 NAME ( 'idnc' 'irisDnComp' )
+    EQUALITY caseIgnoreIA5Match
+    SUBSTR caseIgnoreIA5SubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 
+    SINGLE-VALUE )
+
+#
+# sn1
+#
+# Descrip: Primer apellido de una persona
+# English: First surname of a person ("the surname" in international terms)
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.2 NAME 'sn1'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+#
+# sn2
+#
+# Descrip: Segundo apellido de una persona
+# English: Second surname of a person ("mother's maiden name" in international
+#          terms)
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.3 NAME 'sn2'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+#
+# digitalCertificate
+#
+# Descrip: Certificado para una entrada que no es de tipo persona
+# English: Certificate
+#          Must be transferred using ;binary
+#          with certificateExactMatch rule (per X.509)
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.4 NAME 'digitalCertificate'
+    DESC 'RFC2256: X.509 certificate, use ;binary'
+    EQUALITY certificateExactMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.8 )
+
+#
+# irisPersonalTitle
+#
+# Descrip: Tratamiento (Don, Do�a, Ilmo. Sr.)
+# English: The Personal Title attribute type specifies a personal title 
+#          for a person. Examples of personal titles are "Ms", "Dr", 
+#          "Prof" and "Rev"
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.5 NAME 'irisPersonalTitle'
+    DESC 'RFC1274: personal title'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+
+#
+# irisPersonalUniqueID
+#
+# Descrip: Usado para almacenar un identificador �nico al estilo del
+#          DNI o pasaporte.
+# English: The irisPersonalUniqueID attribute type specifies a "unique 
+#          identifier" for an object represented in the Directory.
+#          The domain within which the identifier is unique, and the 
+#          exact semantics of the identifier, are for local definition.
+#          For a person, this might be the DNI or passport. For an 
+#          organisational unit, it might be a department code.
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.6 NAME 'irisPersonalUniqueID'
+    DESC 'Unique identifier for an object'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    SINGLE-VALUE )
+
+#
+# irisUserEntitlement
+#
+# Descrip: Usado para almacenar un conjunto de derechos de acceso a recursos
+#          Formato:
+#
+#          urn:mace:rediris.es:<org>:entitlement:<string1>:<string2>...
+#
+#          Por ejemplo para almacenar el derecho a aparcar en la planta
+#          segunda del parking del campus 1 y en la planta 5 del parking del
+#          campus 2 de la Universidad de M�laga podr�amos almacenar:
+#         
+#          urn:mace:rediris.es:uma.es:entitlement:parking:c1:p2
+#          urn:mace:rediris.es:uma.es:entitlement:parking:c2:p5
+#
+#          Por ejemplo para almacenar una pregunta y una respuesta secreta 
+#          para el recordatorio/cambio de la clave (userPassword) 
+#          de un usuario de la UMA podr�amos almacenar:
+#
+#          urn:mace:rediris.es:uma.es:entitlement:userPassword:Nombre gato:pumuki
+#
+# English: Used to store a set of rights to resources
+#
+#          urn:mace:rediris.es:<org>:entitlement:<string1>:<string2>...
+#
+#          For example, to store rights to park in parkings of Univeridad 
+#          de M�laga in the second floor of campus 1 and fifth floor of 
+#          campus 2, we could store:
+#
+#          urn:mace:rediris.es:uma.es:entitlement:parking:c1:p2
+#          urn:mace:rediris.es:uma.es:entitlement:parking:c2:p5
+#
+#          For example, to store a question and a secret answer for
+#          the reminder or the change of the userPassword attribute we
+#          could store:
+#
+#          urn:mace:rediris.es:uma.es:entitlement:userPassword:Pet name:pumuki
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.7 NAME 'irisUserEntitlement'
+    DESC 'Used to store a set of rights to resources'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+
+#
+# irisMailHost
+#
+# Descrip: Usado para almacenar el nombre de host completo del Message
+#          Store que es el destino SMTP final de los mensajes dirigidos
+#          a este destinatario
+# English: Used to store the fully-qualified hostname of the Message 
+#          Store that is the final SMTP destination of messages for this
+#          recipient
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.8 NAME 'irisMailHost'
+    DESC 'fully-qualified hostname of the MTA that is the final SMTP destination of messages to this recipient'
+    EQUALITY caseIgnoreIA5Match
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256}
+    SINGLE-VALUE )
+
+#
+# irisMailRoutingAddress
+#
+# Descrip: Direccion RFC822 a la que hay que encaminar los mensajes
+#          dirigidos al Message Store donde se encuentra el buz�n de
+#          este destinatario
+# English: RFC822 address for routing messages to the SMTP Message 
+#          Store of this recipient
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.9 NAME 'irisMailRoutingAddress'
+    DESC 'RFC822 address to use when routing messages to the SMTP MTA of this recipient'
+    EQUALITY caseIgnoreIA5Match
+    SUBSTR caseIgnoreIA5SubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256}
+    SINGLE-VALUE )
+
+#
+# irisMailbox
+#
+# Descrip: Destino final del mensaje 
+#         (por ej. el directorio de mailbox de un usuario)
+# English: Final destination for messages 
+#         (e.g. a user's mailbox directory)
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.10 NAME 'irisMailbox'
+    DESC 'Final destination for mail (for Courier-imap setup)'
+    EQUALITY caseIgnoreIA5Match
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256}
+    SINGLE-VALUE )
+
+#
+# irisUserPrivateAttribute
+#
+# Descrip: Usado para la denegaci�n de acceso a los datos de una entrada. 
+#          La organizaci�n define un "conjunto de atributos privados" a
+#          los que se puede denegar el acceso y el usuario decide los que 
+#          desea ocultar escribiendo sus nombres en este campo. 
+#          Una lista de valores posibles puede ser:
+#
+#          telephoneNumber, facsimileTelephoneNumber, mobile,
+#          postalAddress, postalCode, homePhone, homePostalAddress,
+#          mail, labeledURI, title, description, jpegPhoto
+#
+#          Adem�s existen dos valores especiales
+#
+#          all      Para denegar el acceso a TODOS los atributos
+#                   opcionales, especificados en lista anterior
+#          entry    Para denegar el acceso a toda la entrada
+#
+#          Ejemplos:
+#
+#          irisUserPrivateAttribute: mail
+#          irisUserPrivateAttribute: telephoneNumber
+#
+#                   Los atributos mail y telephoneNumber no ser�n 
+#                   devueltos por el servidor
+#
+#          irisUserPrivateAttribute: all
+#
+#                   No se devolver� ning�n atributo de la lista de 
+#                   atributos opcionales
+#
+#          irisUserPrivateAttribute: entry
+#
+#                   La entrada no ser� devuelta por el servidor
+#
+#          M�s informaci�n:
+#          http://www.rediris.es/ldap/esquemas/irisUserPrivateAttribute.es.html
+#
+# English: Used to store a set of denied access atributes.
+#          The organization define a private attributes set. 
+#          You can deny access to a particular attribute when you put 
+#          its name in irisUserPrivateAttribute.
+#          The following names can be used:
+#
+#          telephoneNumber, facsimileTelephoneNumber, mobile,
+#          postalAddress, postalCode, homePhone, homePostalAddress,
+#          mail, labeledURI, title, description, jpegPhoto
+#
+#          There also exists two special symbols
+#
+#          all      To deny access to all attributes in defined in the
+#                   private attributes set
+#          entry    To deny access to whole entry
+#
+#          Examples:
+#
+#          irisUserPrivateAttribute: mail
+#          irisUserPrivateAttribute: telephoneNumber
+#
+#                   Attributes mail and telephoneNumber will not be 
+#                   returned in a query
+#
+#          irisUserPrivateAttribute: all
+#
+#                   It will not be possible to obtain any attributes defined
+#                   in the private attributes set
+#
+#          irisUserPrivateAttribute: entry
+#
+#                   The entry will not be returned in a query
+#
+#          More information (in spanish)
+#          http://www.rediris.es/ldap/esquemas/irisUserPrivateAttribute.es.html
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.11 NAME 'irisUserPrivateAttribute'
+    DESC 'Set of denied access attributes'
+    EQUALITY caseIgnoreIA5Match
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+#
+# irisMailMainAddress
+#
+# Descrip: Direcci�n de correo preferente de un usuario. Si un usuario
+#          tiene varias direcciones de correo, se pueden almacenar en un
+#          atributo multivaluado como 'mail'. En este caso 
+#          'irisMailMainAddress' se puede usar para indicar la direcci�n
+#          que el usuario desea que se considere como preferente. El uso
+#          concreto de esta preferencia depender� de la aplicaci�n.
+#
+#          Ejemplo:
+#
+#                  mail: stornasol@moulinsart.org
+#                  mail: tornasol@moulinsart.org
+#                  mail: silvestre@moulinsart.org
+#                  irisMailMainAddress: stornasol@moulinsart.org
+#
+# English: Preferred email address for this user. If a user has several 
+#          e-mail addresses, these can be stored in a multi-valued
+#          attribute such as 'mail'. 'irisMailMainAddress' can then be
+#          used to indicate the address the user wants to be considered
+#          as the preferred one. The specific use of this preference
+#          depends on the application.
+#
+#          Example:
+#
+#                  mail: stornasol@moulinsart.org
+#                  mail: tornasol@moulinsart.org
+#                  mail: silvestre@moulinsart.org
+#                  irisMailMainAddress: stornasol@moulinsart.org
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.12 NAME 'irisMailMainAddress'
+    DESC 'preferred RFC822 email address of this recipient'
+    EQUALITY caseIgnoreIA5Match
+    SUBSTR caseIgnoreIA5SubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256}
+    SINGLE-VALUE )
+
+#
+# irisMailAlternateAddress
+#
+# Descrip: Direcci�n de correo alternativa de un usuario. Si un
+#          usuario tiene varias direcciones de correo, se puede optar
+#          por utilizar el atributo 'mail' para almacenar s�lo la
+#          direcci�n principal. En tal caso se puede usar
+#          'irisMailAlternateAddress' para almacenar las direcciones
+#          alternativas o alias. El uso concreto de estas direcciones
+#          alternativas depender� de la aplicaci�n.
+#
+#          Ejemplo:
+#
+#                  mail: stornasol@moulinsart.org
+#                  irisMailAlternateAddress: tornasol@moulinsart.org
+#                  irisMailAlternateAddress: silvestre@moulinsart.org
+#                  irisMailAlternateAddress: s.tornasol@moulinsart.org
+#
+# English: Alternate email address for this user. If a user has
+#          several e-mail addresses, the attribute 'mail' can be 
+#          used to store just the main one. In this case,
+#          'irisMailAlternateAddress' can be used to indicate the
+#          alternate addresses or aliases. The specific use of these
+#          alternate addresses depends on the application.
+#
+#          Example:
+#
+#                  mail: stornasol@moulinsart.org
+#                  irisMailAlternateAddress: tornasol@moulinsart.org
+#                  irisMailAlternateAddress: silvestre@moulinsart.org
+#                  irisMailAlternateAddress: s.tornasol@moulinsart.org
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.13 NAME 'irisMailAlternateAddress'
+    DESC 'alternate RFC822 email address of this recipient'
+    EQUALITY caseIgnoreIA5Match
+    SUBSTR caseIgnoreIA5SubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} ) 
+
+#
+# irisUserStatus
+#
+# Descrip: Se utiliza para almacenar distintos estados de un usuario
+#
+#          urn:mace:rediris.es:<org>:userStatus:<string1>:<string2>...
+#
+#          Por ejemplo para almacenar distintos estados de la actividad
+#          de un usuario en la UMA se podr�an utilizar:
+#
+#          urn:mace:rediris.es:uma.es:userStatus:affiliation:expired
+#          urn:mace:rediris.es:uma.es:userStatus:sendMail:expired
+#          urn:mace:rediris.es:uma.es:userStatus:getMail:active
+#
+# English: Used to store a set of user status
+#
+#          urn:mace:rediris.es:<org>:userStatus:<string1>:<string2>...
+#
+#          For example to store different user activity states in UMA
+#          University we could store:
+#
+#          urn:mace:rediris.es:uma.es:userStatus:affiliation:expired
+#          urn:mace:rediris.es:uma.es:userStatus:sendMail:expired
+#          urn:mace:rediris.es:uma.es:userStatus:getMail:active
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.14 NAME 'irisUserStatus'
+    DESC 'Used to store a set of user status'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+
+#
+# irisUserPresenceID
+#
+# Descrip: Se utiliza para almacenar distintos valores relacionados con
+#          los sistemas de presencia en la red
+#
+#          urn:mace:rediris.es:presence:<urn>
+#
+#          Por ejemplo:
+#
+#          urn:mace:rediris.es:presence:xmpp:pepe@im.univx.es
+#          urn:mace:rediris.es:presence:sip:pepe@miweb.es
+#          urn:mace:rediris.es:presence:sip:jose.perez@univx.es
+#          urn:mace:rediris.es:presence:h323:pepe@miweb.es:8080;parametros
+#
+#          Para casos como Skype se propone la siguiente notaci�n:
+#
+#          urn:mace:rediris.es:presence:skype:pepe.perez
+#
+# English: Used to store a set of values related to the network presence
+#
+#          urn:mace:rediris.es:presence:<urn>
+#
+#          For example:
+#
+#          urn:mace:rediris.es:presence:xmpp:pepe@im.univx.es
+#          urn:mace:rediris.es:presence:sip:pepe@miweb.es
+#          urn:mace:rediris.es:presence:sip:jose.perez@univx.es
+#          urn:mace:rediris.es:presence:h323:pepe@miweb.es:8080;parametros
+#
+#          With Skype we propose the followin notation:
+#
+#          urn:mace:rediris.es:presence:skype:pepe.perez
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.15 NAME 'irisUserPresenceID'
+    DESC 'Used to store a set of values related to the network presence'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+
+#
+# irisClassifCode
+#
+# Descrip: Se utiliza para almacenar un conjunto de valores que indican la
+#          posici�n del objeto en distintas clasificaciones
+#
+#          urn:mace:rediris.es:<org>:classif:<classifName>:<classifVersion>:<classifValue>
+#          urn:mace:rediris.es:<org>:classif:<string1>:<string2>:<string3>...
+#
+#          Por ejemplo:
+#
+#          urn:mace:rediris.es:uma.es:classif:umaClasif2:20030101:a1b1
+#          urn:mace:rediris.es:uma.es:classif:CATRE:20040501-1.0.8:a03b09c12d01
+#
+# English: Used to store a set of values meaning the object position
+#          according to diverse classification criteria
+#
+#          urn:mace:rediris.es:<org>:classif:<classifName>:<classifVersion>:<classifValue>
+#          urn:mace:rediris.es:<org>:classif:<string1>:<string2>:<string3>...
+#
+#          For example:
+#
+#          urn:mace:rediris.es:uma.es:classif:umaClasif2:20030101:a1b1
+#          urn:mace:rediris.es:uma.es:classif:CATRE:20040501-1.0.8:a03b09c12d01
+#
+attributetype ( 1.3.6.1.4.1.7547.4.3.2.16 NAME 'irisClassifCode'
+    DESC 'Used to store a set of values related to the object classification'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+
+#----------------------------------------------------------------------
+# Object classes
+#----------------------------------------------------------------------
+
+#
+# irisObject
+#
+# Descrip: Objeto gen�rico para la comunidad IRIS
+#
+objectclass ( 1.3.6.1.4.1.7547.4.3.1.1  NAME 'irisObject'
+    DESC 'Generic object within the IRIS community'
+    SUP top 
+    AUXILIARY 
+    MAY ( idnc $ irisClassifCode)
+ )
+
+
+#
+# irisPerson
+#
+# Descrip: Personas de la comunidad IRIS
+#
+objectclass ( 1.3.6.1.4.1.7547.4.3.1.2  NAME 'irisPerson'
+    DESC 'Persons inside the IRIS community'
+    SUP top 
+    AUXILIARY 
+    MAY ( sn1 $ sn2 $ irisPersonalTitle $ irisPersonalUniqueID $ 
+          irisUserEntitlement $ irisUserPrivateAttribute $ irisUserStatus $
+          irisMailHost $ irisMailRoutingAddress $ irisMailbox $
+          irisMailMainAddress $ irisMailAlternateAddress $
+          irisUserPresenceID $ irisClassifCode )
+ )
+
+
+#
+# irisInetEntity
+#
+# Descrip: Objeto con atributos relacionados con la identidad electr�nica
+# 
+objectclass ( 1.3.6.1.4.1.7547.4.3.1.3  NAME 'irisInetEntity'
+    DESC 'Object holding an electronic identity'
+    SUP top 
+    AUXILIARY 
+    MAY ( cn $ description $ mail $ digitalCertificate $ ipHostNumber $
+          irisUserEntitlement $ irisUserPrivateAttribute $ irisUserStatus $
+          irisMailHost $ irisMailRoutingAddress $ irisMailbox $
+          irisMailMainAddress $ irisMailAlternateAddress $
+          irisUserPresenceID $ irisClassifCode )
+ )
+
+#
+# irisInetEntityStr
+#
+# Descrip: Objeto con atributos relacionados con la identidad electr�nica
+# 
+objectclass ( 1.3.6.1.4.1.7547.4.3.1.4  NAME 'irisInetEntityStr'
+    DESC 'Object holding an electronic identity'
+    SUP top 
+    STRUCTURAL 
+    MAY ( cn $ description $ mail $ digitalCertificate $ ipHostNumber $
+          irisUserEntitlement $ irisUserPrivateAttribute $ irisUserStatus $
+          irisMailHost $ irisMailRoutingAddress $ irisMailbox $
+          irisMailMainAddress $ irisMailAlternateAddress $
+          irisUserPresenceID $ irisClassifCode)
+ )
