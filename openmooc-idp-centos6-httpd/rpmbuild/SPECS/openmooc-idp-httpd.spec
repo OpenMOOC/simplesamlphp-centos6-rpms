@@ -112,7 +112,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %attr(640,root,simplesamlphp) %config(noreplace) %{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
 
-%attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
+%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
 
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/httpd/conf.d/idp.conf
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/httpd/conf.d/zzz-phpldapadmin.conf

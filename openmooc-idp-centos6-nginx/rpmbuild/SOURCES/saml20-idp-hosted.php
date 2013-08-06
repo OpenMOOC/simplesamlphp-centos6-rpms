@@ -21,15 +21,24 @@ $metadata['__DYNAMIC:1__'] = array(
 	 * Authentication source to use. Must be one that is configured in
 	 * 'config/authsources.php'.
 	 */
-	'auth' => 'example-userpass',
+	'auth' => 'ldap',
 
 	/* Uncomment the following to use the uri NameFormat on attributes. */
 	/*
 	'attributes.NameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
-	'authproc' => array(
-		// Convert LDAP names to oids.
-		100 => array('class' => 'core:AttributeMap', 'name2oid'),
-	),
 	*/
+
+	// This filter eliminate the userPassword from the metadata that will be sent to the diferents components
+	'authproc' => array(
+		10 => array(
+			'class' => 'core:PHP',
+			'code' => '
+	                      if (isset($attributes["userPassword"])) {
+	                              unset($attributes["userPassword"]);
+	                      }
+			',
+		),
+	),
+
 
 );

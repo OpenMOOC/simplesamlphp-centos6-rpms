@@ -140,7 +140,7 @@ ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 
 %attr(640,root,simplesamlphp) %config(noreplace) %{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
 
-%attr(640,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
+%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
 
 # nginx
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/nginx/conf.d/idp.conf
