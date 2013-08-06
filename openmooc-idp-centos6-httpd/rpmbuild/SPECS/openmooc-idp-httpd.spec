@@ -45,6 +45,7 @@ Requires: simplesamlphp-userregistration
 # simplesamlphp-userregistration dependences for OpenMOOC
 Requires: mongodb
 Requires: php-pecl-mongo
+Requires: mongodb-server
 
 %endif 
 
