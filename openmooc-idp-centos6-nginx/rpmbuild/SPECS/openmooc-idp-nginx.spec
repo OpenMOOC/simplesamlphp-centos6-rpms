@@ -52,6 +52,7 @@ Requires: simplesamlphp-userregistration
 Requires: mongodb
 Requires: php-pecl-mongo
 Requires: mongodb-server
+Requires: postfix
 
 %endif 
 
