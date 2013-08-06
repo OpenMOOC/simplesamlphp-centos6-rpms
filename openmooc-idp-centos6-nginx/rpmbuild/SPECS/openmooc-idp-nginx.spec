@@ -29,6 +29,9 @@ Source8: idp.conf
 Source9: htpasswd
 Source10: idp-fpm.conf
 
+#sspopenmooc
+Source11: module_sspopenmooc.php
+
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 %global theme_source sspopenmooc-v%{version}
@@ -78,7 +81,6 @@ touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/cron/enable
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/moocng
 
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/
-cp %theme_source/config-templates/module_sspopenmooc.php ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/module_sspopenmooc.php
 
 cp %{SOURCE2} ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/config-metarefresh.php
 cp %{SOURCE3} ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/config-sanitycheck.php
@@ -87,6 +89,8 @@ cp %{SOURCE5} ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/module_cron.php
 cp %{SOURCE6} ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/openmooc_components.php
 
 cp %{SOURCE7} ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
+
+cp %{SOURCE11} ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/module_sspopenmooc.php
 
 # Copy ldap schemas
 mkdir -p ${RPM_BUILD_ROOT}%{ldap_scheme_path}

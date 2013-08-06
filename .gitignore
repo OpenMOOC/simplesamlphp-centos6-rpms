@@ -10,7 +10,7 @@ openmooc-idp-centos6-httpd/rpmbuild/BUILD
 openmooc-idp-centos6-httpd/rpmbuild/BUILDROOT
 openmooc-idp-centos6-httpd/rpmbuild/RPMS
 openmooc-idp-centos6-httpd/rpmbuild/SRPMS
-openmooc-idp-centos6-mginx/rpmbuild/BUILD
+openmooc-idp-centos6-nginx/rpmbuild/BUILD
 openmooc-idp-centos6-nginx/rpmbuild/BUILDROOT
 openmooc-idp-centos6-nginx/rpmbuild/RPMS
 openmooc-idp-centos6-nginx/rpmbuild/SRPMS
