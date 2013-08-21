@@ -49,9 +49,8 @@ Requires: wget
 Requires: ntp
 Requires: simplesamlphp-userregistration
 # simplesamlphp-userregistration dependences for OpenMOOC
-Requires: mongodb
 Requires: php-pecl-mongo
-Requires: mongodb-server
+Requires: mongo-10gen-server
 Requires: postfix
 
 %endif 
