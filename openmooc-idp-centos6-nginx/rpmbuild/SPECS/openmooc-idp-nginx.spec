@@ -132,6 +132,8 @@ chown -R :%{ssp} %{_datadir}/phpldapadmin
 # link phpldapadmin in simplesamlphp folder
 ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 
+# session folder permission
+chmod +s %{_localstatedir}/lib/%{ssp}/data/session
 
 %files
 %defattr(644,root,root,755)

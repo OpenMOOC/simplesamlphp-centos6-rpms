@@ -150,10 +150,10 @@ fi
 %dir %attr(775,%{name},%{name}) %{_datadir}/log/%{name}
 
 %dir %attr(750,root,%{name}) %{_sysconfdir}/pki/%{name}
-%attr(640,root,%{name}) %config(noreplace) %{_sysconfdir}/pki/%{name}/*
+%attr(644,root,%{name}) %config(noreplace) %{_sysconfdir}/pki/%{name}/*
 
 %dir %{_sysconfdir}/%{name}
-%attr(640,root,%{name}) %config(noreplace) %{_sysconfdir}/%{name}/*
+%attr(644,root,%{name}) %config(noreplace) %{_sysconfdir}/%{name}/*
 
 %dir %attr(750,root,%{name}) %{_libdir}/%{name}
 
