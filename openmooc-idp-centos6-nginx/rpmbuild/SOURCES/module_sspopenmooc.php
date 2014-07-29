@@ -1,7 +1,7 @@
 <?php
 
 	// Domain of our MoocNG component
-	$mooc_domain = 'mooc.example.com';
+	$mooc_domain = 'example.com';
 
 	// Domain of the IdP
 	$idp_domain = 'idp.example.com';
@@ -10,8 +10,8 @@
 
 		  'urls' => array (
 		          'site' => 'https://'.$mooc_domain,
-		          'login' => "https://$mooc_domain/saml2/login/",
-		          'logout' => "https://$mooc_domain/saml2/logout/",
+		          'login' => "https://$mooc_domain/auth/login/",
+		          'logout' => "https://$mooc_domain/auth/logout/",
 		          'register' => "https://$idp_domain/simplesaml/module.php/userregistration/newUser.php",
 		          'forgotpassword' => "https://$idp_domain/simplesaml/module.php/userregistration/lostPassword.php",
 		          'changepassword' => "https://$idp_domain/simplesaml/module.php/userregistration/changePassword.php",

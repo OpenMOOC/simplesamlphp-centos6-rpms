@@ -2,7 +2,7 @@
 %global module_name userregistration
 
 Name: simplesamlphp-userregistration
-Version: 0.2.0
+Version: 0.3.2
 Release: 1%{?dist}
 Summary: Module of simpleSAMLphp that allow manage users of a ldap authsource 
 
@@ -38,7 +38,7 @@ accounts:
 This module is an element of the OpenMOOC project.
 
 %prep
-%setup -q -b 0 -n userregistration-0.2.0
+%setup -q -b 0 -n %{module_name}-v%{version}
 
 %post
 echo "The userregistration module was sucessfully installed and was enabled, please config the %{_sysconfdir}/%{ssp}/config/module_userregistration.php file"

@@ -3,7 +3,7 @@
 %global ldap_scheme_path /etc/openldap/schema
 
 Name: openmooc-idp-nginx
-Version: 0.1.0
+Version: 0.1.1
 Release: 1%{?dist}
 Summary: OpenMOOC IdP: simplesamlphp + userregistration + sspopenmooc
 
