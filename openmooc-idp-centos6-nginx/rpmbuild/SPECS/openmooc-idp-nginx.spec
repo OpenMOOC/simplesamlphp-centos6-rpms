@@ -5,7 +5,7 @@
 
 Name: openmooc-idp-nginx
 Version: 0.1.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: OpenMOOC IdP: simplesamlphp + userregistration + sspopenmooc
 
 #TODO: Improve nginx to serve phpldapadmin directly and avoid the use of a symbolic link
@@ -129,14 +129,14 @@ rm -rf ${RPM_BUILD_ROOT}
 sed "s/@SERVER_NAME@/${HOSTNAME:-localhost}/g" -i %{_sysconfdir}/nginx/conf.d/idp.conf
 
 # Ignore default php-fpm configuration file
-mv %{_sysconfdir}/php-fpm.d/www.conf %{_sysconfdir}/php-fpm.d/www.conf.default
+[ -f %{_sysconfdir}/php-fpm.d/www.conf ] && mv %{_sysconfdir}/php-fpm.d/www.conf %{_sysconfdir}/php-fpm.d/www.conf.default
 
 # phpldapadmin, override the apache perm
 chown -R :%{ssp} %{_sysconfdir}/phpldapadmin
 chown -R :%{ssp} %{_datadir}/phpldapadmin
 
 # link phpldapadmin in simplesamlphp folder
-ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
+[ ! -d %{_libdir}/%{ssp}/www/phpldapadmin ] && ln -s %{_datadir}/phpldapadmin %{_libdir}/%{ssp}/www/phpldapadmin
 
 # session folder permission
 chmod +s %{_localstatedir}/lib/%{ssp}/data/session
