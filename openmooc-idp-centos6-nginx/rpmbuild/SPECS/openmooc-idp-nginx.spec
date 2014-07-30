@@ -5,7 +5,7 @@
 
 Name: openmooc-idp-nginx
 Version: 0.1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: OpenMOOC IdP: simplesamlphp + userregistration + sspopenmooc
 
 #TODO: Improve nginx to serve phpldapadmin directly and avoid the use of a symbolic link
@@ -81,6 +81,7 @@ touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/metarefresh/enable
 touch ${RPM_BUILD_ROOT}%{_libdir}/%{ssp}/modules/cron/enable
 
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/moocng
+mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/metadata/askbot
 
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/%{ssp}/config/
 
@@ -153,6 +154,7 @@ chmod +s %{_localstatedir}/lib/%{ssp}/data/session
 %attr(640,root,simplesamlphp) %config(noreplace) %{_localstatedir}/lib/%{ssp}/metadata/saml20-idp-hosted.php
 
 %attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/moocng
+%attr(770,root,simplesamlphp) %{_localstatedir}/lib/%{ssp}/metadata/askbot
 
 # nginx
 %attr(644,root,simplesamlphp) %config(noreplace) %{_sysconfdir}/nginx/conf.d/idp.conf
