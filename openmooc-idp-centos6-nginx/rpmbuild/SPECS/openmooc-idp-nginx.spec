@@ -1,10 +1,11 @@
 %global ssp simplesamlphp
 %global theme_module sspopenmooc
 %global ldap_scheme_path /etc/openldap/schema
+%global crond_path /etc/cron.d
 
 Name: openmooc-idp-nginx
 Version: 0.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: OpenMOOC IdP: simplesamlphp + userregistration + sspopenmooc
 
 #TODO: Improve nginx to serve phpldapadmin directly and avoid the use of a symbolic link
@@ -24,6 +25,7 @@ Source5: module_cron.php
 Source6: openmooc_components.php
 # IdP Metadata
 Source7: saml20-idp-hosted.php
+Source12: openmooc-metarefresh
 # Nginx // php-fpm settings
 Source8: idp.conf
 Source9: htpasswd
@@ -110,6 +112,9 @@ cp %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d/idp-fpm.conf
 # nginx's session
 mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/lib/%{ssp}/data/session
 
+# crond metarefresh
+mkdir -p ${RPM_BUILD_ROOT}%{crond_path}
+cp %{SOURCE12} ${RPM_BUILD_ROOT}%{crond_path}/
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -167,6 +172,8 @@ chmod +s %{_localstatedir}/lib/%{ssp}/data/session
 %{ldap_scheme_path}/iris.schema
 %{ldap_scheme_path}/schac.schema
 
+# crond metarefresh
+%attr(644,root,simplesamlphp) %{crond_path}/openmooc-metarefresh
 
 %changelog
 * Mon Jul 10 2013 <smartin@yaco.es> - 0.1.0-1

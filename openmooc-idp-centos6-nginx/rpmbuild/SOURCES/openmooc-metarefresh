@@ -1,0 +1,1 @@
+01 * * * * root curl --silent "https://idp.example.com/simplesaml/module.php/cron/cron.php?key=secret&tag=metarefresh" > /dev/null 2>&1
