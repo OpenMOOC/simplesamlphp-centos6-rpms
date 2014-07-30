@@ -42,7 +42,7 @@
 
 Name: simplesamlphp
 Version: 1.11.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: PHP SAML 2.0 service provider and identity provider
 
 Group: Applications/Internet
@@ -50,6 +50,7 @@ License: LGPLv2
 URL: http://simplesamlphp.org/
 Source0: http://simplesamlphp.googlecode.com/files/simplesamlphp-%{version}.tar.gz
 Patch0: simplesamlphp-config-dirs-v1.patch
+Patch1: simplesamlphp-authsources-example-v1.patch
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 %if 0%{?el6}
@@ -90,6 +91,7 @@ But also supports some other identity protocols, such as Shibboleth
 %prep
 %setup -q -b 0
 %patch0 -p0
+%patch1 -p0
 
 %build
 

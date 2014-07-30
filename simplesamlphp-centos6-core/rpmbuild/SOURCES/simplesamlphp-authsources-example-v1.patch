@@ -1,0 +1,40 @@
+Index: config/authsources.php
+===================================================================
+--- config/authsources.php	(original)
++++ config/authsources.php	(patched)
+@@ -347,4 +347,34 @@ $config = array(
+ 	),
+ 	*/
+ 
++	'ldap' => array(
++		'ldap:LDAP',
++
++		'hostname' => 'idp.example.com',
++		'enable_tls' => FALSE,	# We don't use TLS, for production enviroment you can config the LDAP Server
++								# with TLS and enable this param
++		'debug' => FALSE,
++		'timeout' => 0,
++
++		'attributes' => NULL,	# To retrieve all atributes from the LDAP
++
++		'dnpattern' => 'mail=%username%,ou=People,dc=example,dc=com',
++		'search.enable' => FALSE,
++		'search.base' => 'ou=People,dc=example,dc=com',
++
++		// The attribute(s) the username should match against.
++		// This is an array with one or more attribute names. Any of the attributes in
++		// the array may match the value the username.
++		'search.attributes' => array('mail'),
++
++		// The username & password the simpleSAMLphp should bind to before searching. If
++		// this is left as NULL, no bind will be performed before searching.
++		'search.username' => NULL,
++		'search.password' => NULL,
++
++		'priv.read' => FALSE,
++		'priv.username' => NULL,
++		'priv.password' => NULL,
++	),
++
+ );
+
